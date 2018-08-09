@@ -1,6 +1,7 @@
 package com.g4s8.hamcrest.json;
 
 import javax.json.Json;
+import javax.json.JsonValue;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -38,7 +39,7 @@ public final class JsonHasTest {
     public void matchBoolean() throws Exception {
         final String key = "key";
         MatcherAssert.assertThat(
-            Json.createObjectBuilder().add(key, Boolean.TRUE).build(),
+            Json.createObjectBuilder().add(key, JsonValue.TRUE).build(),
             new JsonHas(
                 key,
                 new JsonValueIs(Boolean.TRUE)
@@ -55,6 +56,18 @@ public final class JsonHasTest {
             new JsonHas(
                 key,
                 new JsonValueIs(value)
+            )
+        );
+    }
+
+    @Test
+    public void matchNull() throws Exception {
+        final String key = "qwe";
+        MatcherAssert.assertThat(
+            Json.createObjectBuilder().add(key, JsonValue.NULL).build(),
+            new JsonHas(
+                key,
+                JsonValueIs.NULL
             )
         );
     }
