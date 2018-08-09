@@ -9,6 +9,9 @@ import org.junit.Test;
  * Test case for json matchers.
  *
  * @since 1.0
+ * @todo #1:30min Add matchers for json-arrays, it should be similar
+ *  to hamcrest matchers for collections/lists, it may be named like
+ *  `JsonArrayContains`, `JsonArrayHas` etc.
  */
 public final class JsonHasTest {
 
