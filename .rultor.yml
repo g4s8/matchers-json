@@ -1,0 +1,23 @@
+docker:
+  image: yegor256/java8
+assets:
+  settings.xml: g4s8/.rultor#assets/g4s8-mvn/settings.xml
+env:
+  MAVEN_OPTS: -Xmx256m
+  JAVA_OPTS: -Xmx128m
+install: |
+  sudo gem install --no-rdoc --no-ri pdd
+  sudo gem install --no-rdoc --no-ri xcop
+architect:
+- g4s8
+merge:
+  script: |
+    pdd --file=/dev/null
+    mvn clean install -Pqulice --errors
+    mvn clean site -Psite --errors
+release:
+  script: |-
+    [[ "${tag}" =~ ^[0-9]+(\.[0-9]+)*$ ]] || exit -1
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Ppublish -Pqulice --errors --settings ../settings.xml

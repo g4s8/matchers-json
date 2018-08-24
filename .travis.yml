@@ -1,0 +1,18 @@
+language: java
+sudo: required
+cache:
+  directories:
+    - $HOME/.m2
+script:
+  - set -e
+  - mvn clean install -Pqulice --errors --batch-mode --quiet
+  - mvn clean --quiet
+env:
+  global:
+    - MAVEN_OPTS="-Xmx256m"
+    - JAVA_OPTS="-Xmx128m"
+jdk:
+  - oraclejdk8
+after_success:
+  - mvn verify --quiet --batch-mode -Pcodecov -Pqulice
+  - "bash <(curl -s https://codecov.io/bash)"
