@@ -24,62 +24,69 @@
  */
 package com.g4s8.hamcrest.json;
 
+import java.io.StringReader;
+import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonValue;
+import javax.json.stream.JsonParsingException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Matches json object fields.
+ * Match a string against json matcher.
  *
- * @since 0.1
+ * @since 0.2
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class JsonHas extends TypeSafeMatcher<JsonObject> {
+public final class StringIsJson extends TypeSafeMatcher<String> {
 
     /**
-     * Field name.
+     * Json matcher.
      */
-    private final String field;
-
-    /**
-     * Value matcher.
-     */
-    private final Matcher<? extends JsonValue> matcher;
+    private final Matcher<JsonObject> matcher;
 
     /**
      * Ctor.
      *
-     * @param field Field name
-     * @param matcher Value matcher
+     * @param matcher Json matcher
      */
-    public JsonHas(final String field,
-        final Matcher<? extends JsonValue> matcher) {
+    public StringIsJson(final Matcher<JsonObject> matcher) {
         super();
-        this.field = field;
         this.matcher = matcher;
     }
 
     @Override
     public void describeTo(final Description description) {
-        description.appendText("field ")
-            .appendValue(this.field)
-            .appendText(" with ")
+        description.appendText("string ")
             .appendDescriptionOf(this.matcher);
     }
 
     @Override
-    protected boolean matchesSafely(final JsonObject item) {
-        return this.matcher.matches(item.get(this.field));
+    protected void describeMismatchSafely(final String item,
+        final Description description) {
+        description.appendText("string: '")
+            .appendValue(item)
+            .appendText("' ");
+        try {
+            this.matcher.describeMismatch(
+                Json.createReader(new StringReader(item)).readObject(),
+                description
+            );
+        } catch (final JsonParsingException err) {
+            description.appendText("is not a valid json: ")
+                .appendText(err.getMessage());
+        }
     }
 
     @Override
-    protected void describeMismatchSafely(final JsonObject item,
-        final Description desc) {
-        desc.appendText("field ")
-            .appendValue(this.field)
-            .appendText(" ");
-        this.matcher.describeMismatch(item.get(this.field), desc);
+    protected boolean matchesSafely(final String item) {
+        boolean success;
+        try {
+            success = this.matcher.matches(
+                Json.createReader(new StringReader(item)).readObject()
+            );
+        } catch (final JsonParsingException ignored) {
+            success = false;
+        }
+        return success;
     }
 }

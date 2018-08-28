@@ -34,7 +34,7 @@ import org.hamcrest.TypeSafeMatcher;
 /**
  * Matches json values.
  *
- * @since 1.0
+ * @since 0.1
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class JsonValueIs extends TypeSafeMatcher<JsonValue> {
