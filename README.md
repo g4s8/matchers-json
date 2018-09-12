@@ -30,6 +30,8 @@ last version is: [![Bintray](https://api.bintray.com/packages/g4s8/mvn/com.g4s8.
 
 ## Usage
 
+*You can find examples in `src/test` files.*
+
 To match a field in JSON object use `JsonHas`:
 ```java
 MatcherAssert.assertThat(
