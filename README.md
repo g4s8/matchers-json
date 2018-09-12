@@ -11,10 +11,26 @@ Hamcrest matchers for json objects
 [![License](https://img.shields.io/github/license/g4s8/matchers-json.svg?style=flat-square)](https://github.com/g4s8/matchers-json/blob/master/LICENSE)
 [![Test Coverage](https://img.shields.io/codecov/c/github/g4s8/matchers-json.svg?style=flat-square)](https://codecov.io/github/g4s8/matchers-json?branch=master)
 
+## Motivation
+
+This library helps to achieve
+[single statement unit test](https://www.yegor256.com/2017/05/17/single-statement-unit-tests.html)
+rule, when testing JSON objects.
+
+## Download
+
+To use it add maven dependency to your `pom.xml`:
+```xml
+<dependency>
+  <groupId>com.g4s8</groupId>
+  <artifactId>matchers-json</artifactId>
+</dependency>
+```
+last version is: [![Bintray](https://api.bintray.com/packages/g4s8/mvn/com.g4s8.matchers-json/images/download.svg)](https://bintray.com/g4s8/mvn/com.g4s8.matchers-json/_latestVersion)
 
 ## Usage
 
-To match any field in json object use `JsonHas`:
+To match a field in JSON object use `JsonHas`:
 ```java
 MatcherAssert.assertThat(
     Json.createObjectBuilder()
@@ -36,10 +52,9 @@ MatcherAssert.assertThat(
 
 To match json value use `JsonValueIs`:
 
-For strings: `new JsonValueIs("some string")`
+ - for strings: `new JsonValueIs("some string")`
+ - for numbers: `new JsonValueIs(100)`
+ - for booleans: `new JsonValueIs(true)`
+ - for json-null: `JsonValueIs.NULL`
 
-For numbers: `new JsonValueIs(100)`
-
-For booleans: `new JsonValueIs(true)`
-
-For json-null: `JsonValueIs.NULL`
+To match JSON array items use `JsonContains` (not implemented yet: https://github.com/g4s8/matchers-json/issues/2)
