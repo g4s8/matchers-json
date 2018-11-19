@@ -110,6 +110,17 @@ public final class JsonValueIs extends TypeSafeMatcher<JsonValue> {
     /**
      * Ctor.
      *
+     * @param type Value type
+     * @param matcher Value matcher
+     */
+    public JsonValueIs(final JsonValue.ValueType type,
+        final Matcher<String> matcher) {
+        this(CoreMatchers.equalTo(type), matcher);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param type Json type.
      * @param value Json value.
      */
