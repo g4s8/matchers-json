@@ -34,12 +34,13 @@ import org.junit.Test;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class StringIsJsonTest {
+
     @Test
     public void matchValidString() {
         final int value = 42;
         MatcherAssert.assertThat(
             String.format("{\"foo\": %d}", value),
-            new StringIsJson(
+            new StringIsJson.Object(
                 new JsonHas("foo", new JsonValueIs(value))
             )
         );

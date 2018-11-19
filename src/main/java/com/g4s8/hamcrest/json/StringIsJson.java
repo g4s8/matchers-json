@@ -25,7 +25,11 @@
 package com.g4s8.hamcrest.json;
 
 import java.io.StringReader;
+import java.util.function.Function;
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.json.stream.JsonParsingException;
 import org.hamcrest.Description;
@@ -37,7 +41,8 @@ import org.hamcrest.TypeSafeMatcher;
  *
  * @since 0.2
  */
-public final class StringIsJson extends TypeSafeMatcher<String> {
+@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
+public abstract class StringIsJson extends TypeSafeMatcher<String> {
 
     /**
      * Json matcher.
@@ -45,13 +50,21 @@ public final class StringIsJson extends TypeSafeMatcher<String> {
     private final Matcher<? extends JsonValue> matcher;
 
     /**
+     * Parsing of json.
+     */
+    private final Function<JsonReader, JsonValue> parsing;
+
+    /**
      * Ctor.
      *
      * @param matcher Json matcher
+     * @param parsing Json parsing
      */
-    public StringIsJson(final Matcher<? extends JsonValue> matcher) {
+    private StringIsJson(final Matcher<? extends JsonValue> matcher,
+        final Function<JsonReader, JsonValue> parsing) {
         super();
         this.matcher = matcher;
+        this.parsing = parsing;
     }
 
     @Override
@@ -68,7 +81,7 @@ public final class StringIsJson extends TypeSafeMatcher<String> {
             .appendText("' ");
         try {
             this.matcher.describeMismatch(
-                Json.createReader(new StringReader(item)).readObject(),
+                this.parsing.apply(Json.createReader(new StringReader(item))),
                 description
             );
         } catch (final JsonParsingException err) {
@@ -88,5 +101,34 @@ public final class StringIsJson extends TypeSafeMatcher<String> {
             success = false;
         }
         return success;
+    }
+
+    /**
+     * Json object as string.
+     */
+    public static final class Object extends StringIsJson {
+
+        /**
+         * String is JSON object.
+         *
+         * @param matcher Object matcher
+         */
+        public Object(final Matcher<JsonObject> matcher) {
+            super(matcher, JsonReader::readObject);
+        }
+    }
+
+    /**
+     * Json array as string.
+     */
+    public static final class Array extends StringIsJson {
+
+        /**
+         * String is JSON array.
+         * @param matcher Array matcher
+         */
+        public Array(final Matcher<JsonArray> matcher) {
+            super(matcher, JsonReader::readArray);
+        }
     }
 }
