@@ -26,7 +26,7 @@ package com.g4s8.hamcrest.json;
 
 import java.io.StringReader;
 import javax.json.Json;
-import javax.json.JsonObject;
+import javax.json.JsonValue;
 import javax.json.stream.JsonParsingException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -42,14 +42,14 @@ public final class StringIsJson extends TypeSafeMatcher<String> {
     /**
      * Json matcher.
      */
-    private final Matcher<JsonObject> matcher;
+    private final Matcher<? extends JsonValue> matcher;
 
     /**
      * Ctor.
      *
      * @param matcher Json matcher
      */
-    public StringIsJson(final Matcher<JsonObject> matcher) {
+    public StringIsJson(final Matcher<? extends JsonValue> matcher) {
         super();
         this.matcher = matcher;
     }
