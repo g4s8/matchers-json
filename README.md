@@ -11,28 +11,23 @@ Hamcrest matchers for json objects
 [![License](https://img.shields.io/github/license/g4s8/matchers-json.svg?style=flat-square)](https://github.com/g4s8/matchers-json/blob/master/LICENSE)
 [![Test Coverage](https://img.shields.io/codecov/c/github/g4s8/matchers-json.svg?style=flat-square)](https://codecov.io/github/g4s8/matchers-json?branch=master)
 
-## Motivation
 
-This library helps to achieve
-[single statement unit test](https://www.yegor256.com/2017/05/17/single-statement-unit-tests.html)
-rule, when testing JSON objects.
+## Get
 
-## Download
-
-To use it add maven dependency to your `pom.xml`:
+To install it add dependency to your `pom.xml`:
 ```xml
 <dependency>
   <groupId>com.g4s8</groupId>
   <artifactId>matchers-json</artifactId>
+  <version></version>
 </dependency>
 ```
-last version is: [![Bintray](https://api.bintray.com/packages/g4s8/mvn/com.g4s8.matchers-json/images/download.svg)](https://bintray.com/g4s8/mvn/com.g4s8.matchers-json/_latestVersion)
+you can find latest version on Bintray badge above.
 
 ## Usage
 
-*You can find examples in `src/test` files.*
-
-To match a field in JSON object use `JsonHas`:
+### Matching JSON objects
+To match any field in JSON object use `JsonHas`:
 ```java
 MatcherAssert.assertThat(
     Json.createObjectBuilder()
@@ -52,11 +47,82 @@ MatcherAssert.assertThat(
 );
 ```
 
+### Matching JSON arrays
+
+To match JSON array use `JsonContains` class with list of matchers for items as argument:
+```java
+new JsonContains(
+    new JsonValueIs("foo"),
+    new JsonValueIs(42),
+    new JsonValueIs(true),
+    JsonValueIs.NULL
+)
+```
+
+Also you can use `JsonHas` matcher to match JSON objects in array:
+```java
+new JsonContains(
+    new JsonHas("value", new JsonValueIs(1234)),
+    new JsonHas("value", new JsonValueIs(6532))
+)
+```
+
+or use `JsonContains` as `JsonHas` argument to match an array in JSON object field:
+```java
+new JsonHas(
+    "items",
+    new JsonContains(
+        new JsonValueIs(1),
+        new JsonValueIs(2),
+        new JsonValueIs(3)
+    )
+)
+```
+
+### Matching JSON values
+
 To match json value use `JsonValueIs`:
 
- - for strings: `new JsonValueIs("some string")`
- - for numbers: `new JsonValueIs(100)`
- - for booleans: `new JsonValueIs(true)`
- - for json-null: `JsonValueIs.NULL`
+For strings: `new JsonValueIs("some string")`
 
-To match JSON array items use `JsonContains` (not implemented yet: https://github.com/g4s8/matchers-json/issues/2)
+For numbers: `new JsonValueIs(100)`
+
+For booleans: `new JsonValueIs(true)`
+
+For json-null: `JsonValueIs.NULL`
+
+For more complex matching you can use primary constructor:
+```java
+MatcherAssert.assertThat(
+    Json.createValue("Starting with 1 2 3"),
+    new JsonValueIs(
+        JsonValue.ValueType.STRING,
+        Matchers.startsWith("Starting")
+    )
+);
+```
+
+## Additional
+
+Also this library provides some useful classes to help you convert different types to JSON matchers:
+
+`StringIsJson` is decorator for JSON matcher which implements `Matcher<String>` interface,
+so you can match a string against JSON matchers:
+```java
+MatcherAssert.assertThat(
+    "{\"foo\":\"bar\"}",
+    new StringIsJson(new JsonHas("foo", new JsonValueIs("bar")))
+);
+``` 
+
+## Contribution
+ 1. Fork the repo
+ 2. Make changes
+ 3. Run `mvn clean install -Pqulice`
+ 4. Submit a pull request
+
+Keep in mind that PR will not be accepted if it doesn't pass unit tests and [Qulice](https://www.qulice.com/) checks.
+
+If something is not clear to you or documentation is missed, please submit a bug.
+
+If something is not working, please submit a bug.
