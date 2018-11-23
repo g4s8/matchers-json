@@ -24,7 +24,10 @@
  */
 package com.g4s8.hamcrest.json;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -36,13 +39,18 @@ import org.junit.Test;
 public final class StringIsJsonTest {
 
     @Test
-    public void matchValidString() {
-        final int value = 42;
+    public void matchJsonObject() {
         MatcherAssert.assertThat(
-            String.format("{\"foo\": %d}", value),
-            new StringIsJson.Object(
-                new JsonHas("foo", new JsonValueIs(value))
-            )
+            "{\"foo\": 42}",
+            new StringIsJson.Object(Matchers.any(JsonObject.class))
+        );
+    }
+
+    @Test
+    public void matchJsonArray() {
+        MatcherAssert.assertThat(
+            "[{\"id\":42}]",
+            new StringIsJson.Array(Matchers.any(JsonArray.class))
         );
     }
 }

@@ -95,7 +95,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
         boolean success;
         try {
             success = this.matcher.matches(
-                Json.createReader(new StringReader(item)).readObject()
+                this.parsing.apply(Json.createReader(new StringReader(item)))
             );
         } catch (final JsonParsingException ignored) {
             success = false;
