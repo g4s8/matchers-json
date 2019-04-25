@@ -1,6 +1,3 @@
-# matchers-json
-Hamcrest matchers for json objects
-
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
 [![DevOps By Rultor.com](http://www.rultor.com/b/g4s8/matchers-json)](http://www.rultor.com/p/g4s8/matchers-json)
 
@@ -11,10 +8,14 @@ Hamcrest matchers for json objects
 [![License](https://img.shields.io/github/license/g4s8/matchers-json.svg?style=flat-square)](https://github.com/g4s8/matchers-json/blob/master/LICENSE)
 [![Test Coverage](https://img.shields.io/codecov/c/github/g4s8/matchers-json.svg?style=flat-square)](https://codecov.io/github/g4s8/matchers-json?branch=master)
 
+[Hamcrest matchers](http://hamcrest.org/JavaHamcrest/) for JSON objects and arrays; adaptors
+for other types allows you to write
+[single statement unit tests](https://www.yegor256.com/2017/05/17/single-statement-unit-tests.html)
+against JSON producing objects.
 
-## Get
+## Usage
 
-To install it add dependency to your `pom.xml`:
+Add dependency to your `pom.xml`:
 ```xml
 <dependency>
   <groupId>com.g4s8</groupId>
@@ -23,43 +24,64 @@ To install it add dependency to your `pom.xml`:
 </dependency>
 ```
 you can find latest version on Bintray badge above.
+Also, this library depends on `javax.json:javax.json-api` library.
 
-## Usage
 
 ### Matching JSON objects
-To match any field in JSON object use `JsonHas`:
+
+Let's assume you have an object with method:
 ```java
-MatcherAssert.assertThat(
-    Json.createObjectBuilder()
-        .add(
-            "foo",
-            Json.createObjectBuilder()
-              .add("bar", 42)
-              .build()
-        ).build(),
-    new JsonHas(
-        "foo",
-        new JsonHas(
-            "bar",
-            new JsonValueIs(42)
-        )
-    )
+class Item {
+  private final int value;
+  
+  Item(final int value) {
+    this.value = value;
+  }
+  
+  JsonObject json() {
+    return Json.createObjectBuilder()
+      .add("value", this.value)
+      .build()
+  }
+}
+```
+To verify that your object returns correct value in a unit test
+use `JsonHas` and `JsonValueIs` matchers:
+```java
+@Test()
+void returnsJsonWithValue() {
+  final int value = 42;
+  MatcherAssert.assertThat(
+    new Item(value).json(),
+    new JsonHas("value", new JsonValueIs(value)))
 );
 ```
 
 ### Matching JSON arrays
 
-To match JSON array use `JsonContains` class with list of matchers for items as argument:
+To match JSON array use `JsonContains` class with list of matchers for items as argument.
+E.g. to verify this json array:
+```json
+[ "foo", 42, true, null ]
+```
+use this matcher:
 ```java
 new JsonContains(
     new JsonValueIs("foo"),
     new JsonValueIs(42),
     new JsonValueIs(true),
     JsonValueIs.NULL
-)
+);
 ```
 
-Also you can use `JsonHas` matcher to match JSON objects in array:
+If your array has JSON objects:
+```json
+[
+  { "value": 1234 },
+  { "value": 6532 }
+]
+```
+use `JsonHas` matcher inside `JsonContains`:
 ```java
 new JsonContains(
     new JsonHas("value", new JsonValueIs(1234)),
@@ -67,14 +89,25 @@ new JsonContains(
 )
 ```
 
-or use `JsonContains` as `JsonHas` argument to match an array in JSON object field:
+You can compose `JsonContains`, `JsonHas` and `JsonValueIs` in any combination.
+E.g. if you have JSON object:
+```json
+{
+  "items": [
+    { "value": 1 },
+    { "value": 2 },
+    { "value": 3 }
+  ]
+}
+```
+you can use:
 ```java
 new JsonHas(
     "items",
     new JsonContains(
-        new JsonValueIs(1),
-        new JsonValueIs(2),
-        new JsonValueIs(3)
+        new JsonHas("value", new JsonValueIs(1)),
+        new JsonHas("value", new JsonValueIs(2)),
+        new JsonHas("value", new JsonValueIs(3))
     )
 )
 ```
@@ -102,11 +135,11 @@ MatcherAssert.assertThat(
 );
 ```
 
-## Additional
+### Adapters
 
 Also this library provides some useful classes to help you convert different types to JSON matchers:
 
-`StringIsJson` is decorator for JSON matcher which implements `Matcher<String>` interface,
+`StringIsJson` is a decorator for JSON matcher which implements `Matcher<String>` interface,
 so you can match a string against JSON matchers:
 ```java
 MatcherAssert.assertThat(
@@ -114,15 +147,3 @@ MatcherAssert.assertThat(
     new StringIsJson(new JsonHas("foo", new JsonValueIs("bar")))
 );
 ``` 
-
-## Contribution
- 1. Fork the repo
- 2. Make changes
- 3. Run `mvn clean install -Pqulice`
- 4. Submit a pull request
-
-Keep in mind that PR will not be accepted if it doesn't pass unit tests and [Qulice](https://www.qulice.com/) checks.
-
-If something is not clear to you or documentation is missed, please submit a bug.
-
-If something is not working, please submit a bug.
