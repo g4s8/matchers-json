@@ -19,3 +19,6 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Ppublish -Pqulice --errors --settings ../settings.xml
+    mvn clean
+    sed -i -E 's/<version>.+<\/version>/<version>${tag}<\/version>/g' README.md
+    git add README.md && git commit -m "Released ${tag}"
