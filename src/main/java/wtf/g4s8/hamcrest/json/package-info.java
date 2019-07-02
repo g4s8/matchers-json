@@ -27,4 +27,4 @@
  *
  * @since 1.0
  */
-package com.g4s8.hamcrest.json;
+package wtf.g4s8.hamcrest.json;

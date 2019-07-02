@@ -23,7 +23,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.g4s8.hamcrest.json;
+package wtf.g4s8.hamcrest.json;
 
 import java.util.Arrays;
 import java.util.Collections;
