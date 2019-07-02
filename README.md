@@ -27,7 +27,7 @@ Add dependency to your `pom.xml`:
 <dependency>
   <groupId>wtf.g4s8</groupId>
   <artifactId>matchers-json</artifactId>
-  <version>1.0.2</version>
+  <version>${tag}</version>
 </dependency>
 ```
 you can find latest version on Bintray badge above.
