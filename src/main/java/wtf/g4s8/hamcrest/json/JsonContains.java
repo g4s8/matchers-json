@@ -78,7 +78,7 @@ public final class JsonContains extends TypeSafeMatcher<JsonArray> {
     }
 
     @Override
-    protected boolean matchesSafely(final JsonArray item) {
+    public boolean matchesSafely(final JsonArray item) {
         boolean matches = true;
         if (item.size() == this.matchers.size()) {
             for (int pos = 0; pos < this.matchers.size(); ++pos) {

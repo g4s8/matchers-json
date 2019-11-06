@@ -70,12 +70,12 @@ public final class JsonHas extends TypeSafeMatcher<JsonObject> {
     }
 
     @Override
-    protected boolean matchesSafely(final JsonObject item) {
+    public boolean matchesSafely(final JsonObject item) {
         return this.matcher.matches(item.get(this.field));
     }
 
     @Override
-    protected void describeMismatchSafely(final JsonObject item,
+    public void describeMismatchSafely(final JsonObject item,
         final Description desc) {
         desc.appendText("field ")
             .appendValue(this.field)
