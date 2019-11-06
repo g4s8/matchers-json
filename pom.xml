@@ -27,6 +27,16 @@
     <developerConnection>scm:git:ssh://github.com:g4s8/matchers-json.git</developerConnection>
     <url>https://github.com/g4s8/matchers-json/tree/master</url>
   </scm>
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-g4s8-mvn</id>
+      <name>bintray</name>
+      <url>https://dl.bintray.com/g4s8/mvn</url>
+    </repository>
+  </repositories>
   <distributionManagement>
     <repository>
       <id>bintray-g4s8-maven</id>
