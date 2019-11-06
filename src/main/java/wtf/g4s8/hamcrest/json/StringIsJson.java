@@ -74,7 +74,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
     }
 
     @Override
-    protected void describeMismatchSafely(final String item,
+    public void describeMismatchSafely(final String item,
         final Description description) {
         description.appendText("string: '")
             .appendValue(item)
@@ -91,7 +91,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
     }
 
     @Override
-    protected boolean matchesSafely(final String item) {
+    public boolean matchesSafely(final String item) {
         boolean success;
         try {
             success = this.matcher.matches(
@@ -105,6 +105,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
 
     /**
      * Json object as string.
+     * @since 0.2
      */
     public static final class Object extends StringIsJson {
 
@@ -120,6 +121,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
 
     /**
      * Json array as string.
+     * @since 0.2
      */
     public static final class Array extends StringIsJson {
 

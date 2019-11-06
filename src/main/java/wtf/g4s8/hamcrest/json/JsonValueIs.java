@@ -140,14 +140,14 @@ public final class JsonValueIs extends TypeSafeMatcher<JsonValue> {
     }
 
     @Override
-    protected boolean matchesSafely(final JsonValue item) {
+    public boolean matchesSafely(final JsonValue item) {
         return item != null
             && this.type.matches(item.getValueType())
             && this.value.matches(JsonValueIs.escaped(item));
     }
 
     @Override
-    protected void describeMismatchSafely(final JsonValue item,
+    public void describeMismatchSafely(final JsonValue item,
         final Description desc) {
         desc.appendText("value ")
             .appendValue(JsonValueIs.escaped(item))

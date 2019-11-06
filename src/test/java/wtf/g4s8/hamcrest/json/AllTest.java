@@ -24,33 +24,22 @@
  */
 package wtf.g4s8.hamcrest.json;
 
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Test;
+import wtf.g4s8.oot.TestChain;
 
 /**
- * Test case for {@link StringIsJson}.
+ * Tests entry point.
  *
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 1.0
  */
-public final class StringIsJsonTest {
-
+public final class AllTest {
     @Test
-    public void matchJsonObject() {
-        MatcherAssert.assertThat(
-            "{\"foo\": 42}",
-            new StringIsJson.Object(Matchers.any(JsonObject.class))
-        );
-    }
-
-    @Test
-    public void matchJsonArray() {
-        MatcherAssert.assertThat(
-            "[{\"id\":42}]",
-            new StringIsJson.Array(Matchers.any(JsonArray.class))
-        );
+    public void run() {
+        new TestChain(
+            new JsonContainsCase(),
+            new JsonHasCase(),
+            new JsonValueIsCase(),
+            new StringIsJsonCase()
+        ).run();
     }
 }

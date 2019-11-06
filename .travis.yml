@@ -12,7 +12,7 @@ env:
     - MAVEN_OPTS="-Xmx256m"
     - JAVA_OPTS="-Xmx128m"
 jdk:
-  - oraclejdk8
+  - openjdk8
 after_success:
   - mvn install --quiet --batch-mode -Pcodecov -Pqulice
   - "bash <(curl -s https://codecov.io/bash)"
