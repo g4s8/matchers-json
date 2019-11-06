@@ -10,6 +10,7 @@ architect:
   - g4s8
 merge:
   script: |
+    rm -v $HOME/.m2/settings.xml
     mvn clean install -Pqulice --errors
     mvn clean site -Psite --errors
     pdd --file=/dev/null
