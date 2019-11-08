@@ -29,10 +29,9 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonValue;
 import org.hamcrest.Matchers;
-import wtf.g4s8.oot.SimpleRun;
+import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
-import wtf.g4s8.oot.TestChain;
-import wtf.g4s8.oot.TestRun;
+import wtf.g4s8.oot.TestCase;
 
 /**
  * Test case for {@link JsonContains}.
@@ -41,14 +40,14 @@ import wtf.g4s8.oot.TestRun;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class JsonContainsCase extends TestRun.Wrap {
+public final class JsonContainsCase extends TestCase.Wrap {
 
     /**
      * Ctor.
      */
     public JsonContainsCase() {
         super(
-            new TestChain(
+            new SequentialTests(
                 new SimpleItemsTest(),
                 new NestedObjectTest(),
                 new ComplexHierarchyTest()
@@ -60,7 +59,7 @@ public final class JsonContainsCase extends TestRun.Wrap {
      * Simple test case against array items.
      * @since 1.0
      */
-    private static final class SimpleItemsTest extends TestRun.Wrap {
+    private static final class SimpleItemsTest extends TestCase.Wrap {
         /**
          * Default ctor.
          */
@@ -73,21 +72,19 @@ public final class JsonContainsCase extends TestRun.Wrap {
          */
         private SimpleItemsTest(final int num, final String str) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonArray>(
-                        "json contains simple items",
-                        new JsonContains(
-                            new JsonValueIs(str),
-                            new JsonValueIs(num),
-                            new JsonValueIs(true),
-                            JsonValueIs.NULL
-                        ),
-                        () -> Json.createArrayBuilder()
-                            .add(str)
-                            .add(num)
-                            .add(JsonValue.TRUE)
-                            .add(JsonValue.NULL)
-                            .build()
+                new SimpleTest<JsonArray>(
+                    "json contains simple items",
+                    () -> Json.createArrayBuilder()
+                        .add(str)
+                        .add(num)
+                        .add(JsonValue.TRUE)
+                        .add(JsonValue.NULL)
+                        .build(),
+                    new JsonContains(
+                        new JsonValueIs(str),
+                        new JsonValueIs(num),
+                        new JsonValueIs(true),
+                        JsonValueIs.NULL
                     )
                 )
             );
@@ -98,7 +95,7 @@ public final class JsonContainsCase extends TestRun.Wrap {
      * Test case against nested objects json array items.
      * @since 1.0
      */
-    private static final class NestedObjectTest extends TestRun.Wrap {
+    private static final class NestedObjectTest extends TestCase.Wrap {
         /**
          * Default ctor.
          */
@@ -111,14 +108,12 @@ public final class JsonContainsCase extends TestRun.Wrap {
          */
         private NestedObjectTest(final String key, final String val) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonArray>(
-                        "json contains nested objects",
-                        new JsonContains(new JsonHas(key, new JsonValueIs(val))),
-                        () -> Json.createArrayBuilder()
-                            .add(Json.createObjectBuilder().add(key, val))
-                            .build()
-                    )
+                new SimpleTest<JsonArray>(
+                    "json contains nested objects",
+                    () -> Json.createArrayBuilder()
+                        .add(Json.createObjectBuilder().add(key, val))
+                        .build(),
+                    new JsonContains(new JsonHas(key, new JsonValueIs(val)))
                 )
             );
         }
@@ -128,7 +123,7 @@ public final class JsonContainsCase extends TestRun.Wrap {
      * Test case against complex JSON arrays and objects mixed together.
      * @since 1.0
      */
-    private static final class ComplexHierarchyTest extends TestRun.Wrap {
+    private static final class ComplexHierarchyTest extends TestCase.Wrap {
 
         /**
          * Default ctor.
@@ -144,56 +139,54 @@ public final class JsonContainsCase extends TestRun.Wrap {
         private ComplexHierarchyTest(final String kname, final String kvalues,
             final String kvalue, final String vsecond, final String vfirst) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonArray>(
-                        "json contains complex hierarchy",
-                        new JsonContains(
-                            Matchers.allOf(
-                                Arrays.asList(
-                                    new JsonHas(kname, new JsonValueIs(vfirst)),
-                                    new JsonHas(
-                                        kvalues,
-                                        new JsonContains(
-                                            new JsonHas(kvalue, new JsonValueIs(1))
+                new SimpleTest<JsonArray>(
+                    "json contains complex hierarchy",
+                    () -> Json.createArrayBuilder()
+                        .add(
+                            Json.createObjectBuilder()
+                                .add(kname, vfirst)
+                                .add(
+                                    kvalues,
+                                    Json.createArrayBuilder()
+                                        .add(
+                                            Json.createObjectBuilder()
+                                                .add(kvalue, 1)
                                         )
-                                    )
                                 )
-                            ),
-                            Matchers.allOf(
-                                Arrays.asList(
-                                    new JsonHas(kname, new JsonValueIs(vsecond)),
-                                    new JsonHas(
-                                        kvalues,
-                                        new JsonContains(
-                                            new JsonHas(kvalue, new JsonValueIs(1)),
-                                            new JsonHas(kvalue, new JsonValueIs(2))
-                                        )
+                        ).add(
+                        Json.createObjectBuilder()
+                            .add(kname, vsecond)
+                            .add(
+                                kvalues,
+                                Json.createArrayBuilder()
+                                    .add(Json.createObjectBuilder().add(kvalue, 1))
+                                    .add(Json.createObjectBuilder().add(kvalue, 2))
+                            )
+                    ).build(),
+                    new JsonContains(
+                        Matchers.allOf(
+                            Arrays.asList(
+                                new JsonHas(kname, new JsonValueIs(vfirst)),
+                                new JsonHas(
+                                    kvalues,
+                                    new JsonContains(
+                                        new JsonHas(kvalue, new JsonValueIs(1))
                                     )
                                 )
                             )
                         ),
-                        () -> Json.createArrayBuilder()
-                            .add(
-                                Json.createObjectBuilder()
-                                    .add(kname, vfirst)
-                                    .add(
-                                        kvalues,
-                                        Json.createArrayBuilder()
-                                            .add(
-                                                Json.createObjectBuilder()
-                                                    .add(kvalue, 1)
-                                            )
-                                    )
-                            ).add(
-                            Json.createObjectBuilder()
-                                .add(kname, vsecond)
-                                .add(
+                        Matchers.allOf(
+                            Arrays.asList(
+                                new JsonHas(kname, new JsonValueIs(vsecond)),
+                                new JsonHas(
                                     kvalues,
-                                    Json.createArrayBuilder()
-                                        .add(Json.createObjectBuilder().add(kvalue, 1))
-                                        .add(Json.createObjectBuilder().add(kvalue, 2))
+                                    new JsonContains(
+                                        new JsonHas(kvalue, new JsonValueIs(1)),
+                                        new JsonHas(kvalue, new JsonValueIs(2))
+                                    )
                                 )
-                        ).build()
+                            )
+                        )
                     )
                 )
             );

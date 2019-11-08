@@ -27,10 +27,9 @@ package wtf.g4s8.hamcrest.json;
 import javax.json.Json;
 import javax.json.JsonValue;
 import org.hamcrest.Matchers;
-import wtf.g4s8.oot.SimpleRun;
+import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
-import wtf.g4s8.oot.TestChain;
-import wtf.g4s8.oot.TestRun;
+import wtf.g4s8.oot.TestCase;
 
 /**
  * Test case for {@link JsonValueIs}.
@@ -39,36 +38,30 @@ import wtf.g4s8.oot.TestRun;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class JsonValueIsCase extends TestRun.Wrap {
+public final class JsonValueIsCase extends TestCase.Wrap {
 
     /**
      * Ctor.
      */
     public JsonValueIsCase() {
         super(
-            new TestChain(
-                new SimpleRun<>(
-                    new SimpleTest<JsonValue>(
-                        "matches string",
-                        new JsonValueIs(JsonValueIsCase.class.getSimpleName()),
-                        () -> Json.createValue(JsonValueIsCase.class.getSimpleName())
-                    )
+            new SequentialTests(
+                new SimpleTest<JsonValue>(
+                    "matches string",
+                    () -> Json.createValue(JsonValueIsCase.class.getSimpleName()),
+                    new JsonValueIs(JsonValueIsCase.class.getSimpleName())
                 ),
-                new SimpleRun<>(
-                    new SimpleTest<JsonValue>(
-                        "matches number",
-                        new JsonValueIs(1),
-                        () -> Json.createValue(1)
-                    )
+                new SimpleTest<JsonValue>(
+                    "matches number",
+                    () -> Json.createValue(1),
+                    new JsonValueIs(1)
                 ),
-                new SimpleRun<>(
-                    new SimpleTest<JsonValue>(
-                        "matches custom matchers",
-                        new JsonValueIs(
-                            JsonValue.ValueType.STRING,
-                            Matchers.startsWith("Starting")
-                        ),
-                        () -> Json.createValue("Starting with 1 2 3")
+                new SimpleTest<JsonValue>(
+                    "matches custom matchers",
+                    () -> Json.createValue("Starting with 1 2 3"),
+                    new JsonValueIs(
+                        JsonValue.ValueType.STRING,
+                        Matchers.startsWith("Starting")
                     )
                 )
             )

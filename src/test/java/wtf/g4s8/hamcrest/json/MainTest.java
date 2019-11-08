@@ -24,22 +24,46 @@
  */
 package wtf.g4s8.hamcrest.json;
 
-import org.junit.Test;
-import wtf.g4s8.oot.TestChain;
+import java.io.IOException;
+import wtf.g4s8.oot.ConsoleReport;
+import wtf.g4s8.oot.FailingReport;
+import wtf.g4s8.oot.ParallelTests;
+import wtf.g4s8.oot.TestCase;
 
 /**
  * Tests entry point.
  *
  * @since 1.0
  */
-public final class AllTest {
-    @Test
-    public void run() {
-        new TestChain(
-            new JsonContainsCase(),
-            new JsonHasCase(),
-            new JsonValueIsCase(),
-            new StringIsJsonCase()
-        ).run();
+@SuppressWarnings(
+    {
+        "PMD.ProhibitPublicStaticMethods",
+        "PMD.JUnit4TestShouldUseTestAnnotation",
+        "PMD.TestClassWithoutTestCases"
+    }
+)
+public final class MainTest extends TestCase.Wrap {
+    /**
+     * Ctor.
+     */
+    private MainTest() {
+        super(
+            new ParallelTests(
+                new JsonContainsCase(),
+                new JsonHasCase(),
+                new JsonValueIsCase(),
+                new StringIsJsonCase()
+            )
+        );
+    }
+
+    /**
+     * Entry point.
+     * @throws IOException On report failure
+     */
+    public static void test() throws IOException {
+        try (FailingReport report = new FailingReport(new ConsoleReport())) {
+            new MainTest().run(report);
+        }
     }
 }

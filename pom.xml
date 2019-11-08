@@ -27,16 +27,6 @@
     <developerConnection>scm:git:ssh://github.com:g4s8/matchers-json.git</developerConnection>
     <url>https://github.com/g4s8/matchers-json/tree/master</url>
   </scm>
-  <repositories>
-    <repository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>bintray-g4s8-mvn</id>
-      <name>bintray</name>
-      <url>https://dl.bintray.com/g4s8/mvn</url>
-    </repository>
-  </repositories>
   <distributionManagement>
     <repository>
       <id>bintray-g4s8-maven</id>
@@ -45,8 +35,32 @@
     </repository>
   </distributionManagement>
   <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>wtf.g4s8.oot</groupId>
+        <artifactId>oot-maven-plugin</artifactId>
+        <version>0.1.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -121,12 +135,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
       <version>2.1</version>
@@ -138,9 +146,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>wtf.g4s8</groupId>
+      <groupId>wtf.g4s8.oot</groupId>
       <artifactId>oot</artifactId>
-      <version>0.1.1</version>
+      <version>0.1.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>

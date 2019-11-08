@@ -27,10 +27,9 @@ package wtf.g4s8.hamcrest.json;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
-import wtf.g4s8.oot.SimpleRun;
+import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
-import wtf.g4s8.oot.TestChain;
-import wtf.g4s8.oot.TestRun;
+import wtf.g4s8.oot.TestCase;
 
 /**
  * Test case for JSON matchers.
@@ -39,14 +38,14 @@ import wtf.g4s8.oot.TestRun;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class JsonHasCase extends TestRun.Wrap {
+public final class JsonHasCase extends TestCase.Wrap {
 
     /**
      * Ctor.
      */
     public JsonHasCase() {
         super(
-            new TestChain(
+            new SequentialTests(
                 new JsonHasCase.JsonFields(),
                 new JsonHasCase.MatchesString(),
                 new JsonHasCase.MatchesBool(),
@@ -59,7 +58,7 @@ public final class JsonHasCase extends TestRun.Wrap {
      * Test case against JSON object fields.
      * @since 1.0
      */
-    private static final class JsonFields extends TestRun.Wrap {
+    private static final class JsonFields extends TestCase.Wrap {
 
         /**
          * Default ctor.
@@ -73,23 +72,21 @@ public final class JsonHasCase extends TestRun.Wrap {
          */
         private JsonFields(final String foo, final String bar, final int num) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonObject>(
-                        "matches json items",
-                        new JsonHas(
+                new SimpleTest<JsonObject>(
+                    "matches json items",
+                    () -> Json.createObjectBuilder()
+                        .add(
                             foo,
-                            new JsonHas(
-                                bar,
-                                new JsonValueIs(num)
-                            )
-                        ),
-                        () -> Json.createObjectBuilder()
-                            .add(
-                                foo,
-                                Json.createObjectBuilder()
-                                    .add(bar, num)
-                                    .build()
-                            ).build()
+                            Json.createObjectBuilder()
+                                .add(bar, num)
+                                .build()
+                        ).build(),
+                    new JsonHas(
+                        foo,
+                        new JsonHas(
+                            bar,
+                            new JsonValueIs(num)
+                        )
                     )
                 )
             );
@@ -100,7 +97,7 @@ public final class JsonHasCase extends TestRun.Wrap {
      * Test case against JSON bool items.
      * @since 1.0
      */
-    private static final class MatchesBool extends TestRun.Wrap {
+    private static final class MatchesBool extends TestCase.Wrap {
 
         /**
          * Default ctor.
@@ -114,14 +111,10 @@ public final class JsonHasCase extends TestRun.Wrap {
          */
         private MatchesBool(final String key) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonObject>(
-                        "matches bool value",
-                        new JsonHas(
-                            key, new JsonValueIs(Boolean.TRUE)
-                        ),
-                        () -> Json.createObjectBuilder().add(key, JsonValue.TRUE).build()
-                    )
+                new SimpleTest<JsonObject>(
+                    "matches bool value",
+                    () -> Json.createObjectBuilder().add(key, JsonValue.TRUE).build(),
+                    new JsonHas(key, new JsonValueIs(Boolean.TRUE))
                 )
             );
         }
@@ -131,7 +124,7 @@ public final class JsonHasCase extends TestRun.Wrap {
      * Test case against JSON string item.
      * @since 1.0
      */
-    private static final class MatchesString extends TestRun.Wrap {
+    private static final class MatchesString extends TestCase.Wrap {
 
         /**
          * Default ctor.
@@ -145,14 +138,10 @@ public final class JsonHasCase extends TestRun.Wrap {
          */
         private MatchesString(final String key, final String val) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonObject>(
-                        "matches string",
-                        new JsonHas(
-                            key, new JsonValueIs(val)
-                        ),
-                        () -> Json.createObjectBuilder().add(key, val).build()
-                    )
+                new SimpleTest<JsonObject>(
+                    "matches string",
+                    () -> Json.createObjectBuilder().add(key, val).build(),
+                    new JsonHas(key, new JsonValueIs(val))
                 )
             );
         }
@@ -162,7 +151,7 @@ public final class JsonHasCase extends TestRun.Wrap {
      * Test case against JSON null items.
      * @since 1.0
      */
-    private static final class MatchesNull extends TestRun.Wrap {
+    private static final class MatchesNull extends TestCase.Wrap {
         /**
          * Default ctor.
          */
@@ -175,15 +164,10 @@ public final class JsonHasCase extends TestRun.Wrap {
          */
         private MatchesNull(final String key) {
             super(
-                new SimpleRun<>(
-                    new SimpleTest<JsonObject>(
-                        "matches null",
-                        new JsonHas(
-                            key,
-                            JsonValueIs.NULL
-                        ),
-                        () -> Json.createObjectBuilder().add(key, JsonValue.NULL).build()
-                    )
+                new SimpleTest<JsonObject>(
+                    "matches null",
+                    () -> Json.createObjectBuilder().add(key, JsonValue.NULL).build(),
+                    new JsonHas(key, JsonValueIs.NULL)
                 )
             );
         }

@@ -27,10 +27,9 @@ package wtf.g4s8.hamcrest.json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import org.hamcrest.Matchers;
-import wtf.g4s8.oot.SimpleRun;
+import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
-import wtf.g4s8.oot.TestChain;
-import wtf.g4s8.oot.TestRun;
+import wtf.g4s8.oot.TestCase;
 
 /**
  * Test case for {@link StringIsJson}.
@@ -39,27 +38,23 @@ import wtf.g4s8.oot.TestRun;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class StringIsJsonCase extends TestRun.Wrap {
+public final class StringIsJsonCase extends TestCase.Wrap {
 
     /**
      * Ctor.
      */
     public StringIsJsonCase() {
         super(
-            new TestChain(
-                new SimpleRun<>(
-                    new SimpleTest<>(
-                        "matchers json object string",
-                        new StringIsJson.Object(Matchers.any(JsonObject.class)),
-                        "{\"foo\": 42}"
-                    )
+            new SequentialTests(
+                new SimpleTest<>(
+                    "matchers json object string",
+                    "{\"foo\": 42}",
+                    new StringIsJson.Object(Matchers.any(JsonObject.class))
                 ),
-                new SimpleRun<>(
-                    new SimpleTest<>(
-                        "matchest json array string",
-                        new StringIsJson.Array(Matchers.any(JsonArray.class)),
-                        "[{\"id\":42}]"
-                    )
+                new SimpleTest<>(
+                    "matchest json array string",
+                    "[{\"id\":42}]",
+                    new StringIsJson.Array(Matchers.any(JsonArray.class))
                 )
             )
         );
