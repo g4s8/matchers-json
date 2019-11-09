@@ -29,11 +29,13 @@ import wtf.g4s8.oot.ConsoleReport;
 import wtf.g4s8.oot.FailingReport;
 import wtf.g4s8.oot.ParallelTests;
 import wtf.g4s8.oot.TestCase;
+import wtf.g4s8.oot.TestGroup;
 
 /**
  * Tests entry point.
  *
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 @SuppressWarnings(
     {
@@ -43,16 +45,19 @@ import wtf.g4s8.oot.TestCase;
     }
 )
 public final class MainTest extends TestCase.Wrap {
+
     /**
      * Ctor.
      */
     private MainTest() {
         super(
             new ParallelTests(
-                new JsonContainsCase(),
-                new JsonHasCase(),
-                new JsonValueIsCase(),
-                new StringIsJsonCase()
+                new TestGroup.Joined(
+                    new JsonContainsCase(),
+                    new JsonHasCase(),
+                    new JsonValueIsCase(),
+                    new StringIsJsonCase()
+                )
             )
         );
     }

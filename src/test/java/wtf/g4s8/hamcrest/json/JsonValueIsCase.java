@@ -27,9 +27,8 @@ package wtf.g4s8.hamcrest.json;
 import javax.json.Json;
 import javax.json.JsonValue;
 import org.hamcrest.Matchers;
-import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
-import wtf.g4s8.oot.TestCase;
+import wtf.g4s8.oot.TestGroup;
 
 /**
  * Test case for {@link JsonValueIs}.
@@ -38,14 +37,15 @@ import wtf.g4s8.oot.TestCase;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class JsonValueIsCase extends TestCase.Wrap {
+public final class JsonValueIsCase extends TestGroup.Wrap {
 
     /**
      * Ctor.
      */
     public JsonValueIsCase() {
         super(
-            new SequentialTests(
+            new TestGroup.Of(
+                "json-value-is",
                 new SimpleTest<JsonValue>(
                     "matches string",
                     () -> Json.createValue(JsonValueIsCase.class.getSimpleName()),
