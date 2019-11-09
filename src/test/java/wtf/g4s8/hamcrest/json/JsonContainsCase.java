@@ -29,9 +29,9 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonValue;
 import org.hamcrest.Matchers;
-import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
 import wtf.g4s8.oot.TestCase;
+import wtf.g4s8.oot.TestGroup;
 
 /**
  * Test case for {@link JsonContains}.
@@ -40,14 +40,15 @@ import wtf.g4s8.oot.TestCase;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class JsonContainsCase extends TestCase.Wrap {
+public final class JsonContainsCase extends TestGroup.Wrap {
 
     /**
      * Ctor.
      */
     public JsonContainsCase() {
         super(
-            new SequentialTests(
+            new TestGroup.Of(
+                "json-contains",
                 new SimpleItemsTest(),
                 new NestedObjectTest(),
                 new ComplexHierarchyTest()
@@ -73,7 +74,7 @@ public final class JsonContainsCase extends TestCase.Wrap {
         private SimpleItemsTest(final int num, final String str) {
             super(
                 new SimpleTest<JsonArray>(
-                    "json contains simple items",
+                    "simple items",
                     () -> Json.createArrayBuilder()
                         .add(str)
                         .add(num)
@@ -109,7 +110,7 @@ public final class JsonContainsCase extends TestCase.Wrap {
         private NestedObjectTest(final String key, final String val) {
             super(
                 new SimpleTest<JsonArray>(
-                    "json contains nested objects",
+                    "nested objects",
                     () -> Json.createArrayBuilder()
                         .add(Json.createObjectBuilder().add(key, val))
                         .build(),
@@ -140,7 +141,7 @@ public final class JsonContainsCase extends TestCase.Wrap {
             final String kvalue, final String vsecond, final String vfirst) {
             super(
                 new SimpleTest<JsonArray>(
-                    "json contains complex hierarchy",
+                    "complex hierarchy",
                     () -> Json.createArrayBuilder()
                         .add(
                             Json.createObjectBuilder()

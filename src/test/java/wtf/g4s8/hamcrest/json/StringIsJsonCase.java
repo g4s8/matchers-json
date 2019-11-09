@@ -27,9 +27,8 @@ package wtf.g4s8.hamcrest.json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import org.hamcrest.Matchers;
-import wtf.g4s8.oot.SequentialTests;
 import wtf.g4s8.oot.SimpleTest;
-import wtf.g4s8.oot.TestCase;
+import wtf.g4s8.oot.TestGroup;
 
 /**
  * Test case for {@link StringIsJson}.
@@ -38,14 +37,15 @@ import wtf.g4s8.oot.TestCase;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
  */
-public final class StringIsJsonCase extends TestCase.Wrap {
+public final class StringIsJsonCase extends TestGroup.Wrap {
 
     /**
      * Ctor.
      */
     public StringIsJsonCase() {
         super(
-            new SequentialTests(
+            new TestGroup.Of(
+                "string-is-json",
                 new SimpleTest<>(
                     "matchers json object string",
                     "{\"foo\": 42}",
