@@ -12,7 +12,6 @@ merge:
   script: |
     rm -vf $HOME/.m2/settings.xml
     mvn clean install -Pqulice --errors
-    mvn clean site -Psite --errors
     pdd --file=/dev/null
 release:
   script: |-
