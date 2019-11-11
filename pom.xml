@@ -34,32 +34,6 @@
       <url>https://api.bintray.com/maven/g4s8/mvn/com.g4s8.matchers-json/;publish=1</url>
     </repository>
   </distributionManagement>
-  <repositories>
-    <repository>
-      <id>sonatypeSnapshots</id>
-      <name>Sonatype Snapshots</name>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>sonatypeSnapshots</id>
-      <name>Sonatype Snapshots</name>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </pluginRepository>
-  </pluginRepositories>
   <build>
     <plugins>
       <plugin>
@@ -71,7 +45,7 @@
       <plugin>
         <groupId>wtf.g4s8.oot</groupId>
         <artifactId>oot-maven-plugin</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.6</version>
         <executions>
           <execution>
             <goals>
@@ -169,7 +143,7 @@
     <dependency>
       <groupId>wtf.g4s8.oot</groupId>
       <artifactId>oot</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>0.1.6</version>
       <scope>test</scope>
     </dependency>
     <dependency>
