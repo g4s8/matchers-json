@@ -49,6 +49,33 @@ public final class JsonHas extends TypeSafeMatcher<JsonObject> {
     private final Matcher<? extends JsonValue> matcher;
 
     /**
+     * JSON has a string value for field.
+     * @param field Name
+     * @param value Expected string
+     */
+    public JsonHas(final String field, final String value) {
+        this(field, new JsonValueIs(value));
+    }
+
+    /**
+     * JSON has a number value for field.
+     * @param field Name
+     * @param value Expected string
+     */
+    public JsonHas(final String field, final Number value) {
+        this(field, new JsonValueIs(value));
+    }
+
+    /**
+     * JSON has a boolean value for field.
+     * @param field Name
+     * @param value Expected string
+     */
+    public JsonHas(final String field, final boolean value) {
+        this(field, new JsonValueIs(value));
+    }
+
+    /**
      * Ctor.
      *
      * @param field Field name
