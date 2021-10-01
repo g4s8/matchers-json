@@ -27,13 +27,6 @@
     <developerConnection>scm:git:ssh://github.com:g4s8/matchers-json.git</developerConnection>
     <url>https://github.com/g4s8/matchers-json/tree/master</url>
   </scm>
-  <distributionManagement>
-    <repository>
-      <id>bintray-g4s8-maven</id>
-      <name>mvn</name>
-      <url>https://api.bintray.com/maven/g4s8/mvn/com.g4s8.matchers-json/;publish=1</url>
-    </repository>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>
@@ -203,6 +196,13 @@
             <version>0.18.19</version>
             <configuration>
               <license>file:${basedir}/LICENSE</license>
+              <excludes combine.children="append">
+                <exclude>checkstyle:.*/src/test/resources/.*</exclude>
+                <exclude>pmd:.*/src/test/resources/.*</exclude>
+                <exclude>findbugs:.*</exclude>
+                <exclude>duplicatefinder:.*</exclude>
+                <exclude>dependencies:.*</exclude>
+                </excludes>
             </configuration>
             <executions>
               <execution>
