@@ -57,10 +57,9 @@ use `JsonHas` and `JsonValueIs` matchers:
 ```java
 @Test()
 void returnsJsonWithValue() {
-  final int value = 42;
   MatcherAssert.assertThat(
     new Item(value).json(),
-    new JsonHas("value", new JsonValueIs(value)))
+    new JsonHas("value", 42)
 );
 ```
 
@@ -112,12 +111,20 @@ you can use:
 new JsonHas(
     "items",
     new JsonContains(
-        new JsonHas("value", new JsonValueIs(1)),
-        new JsonHas("value", new JsonValueIs(2)),
-        new JsonHas("value", new JsonValueIs(3))
+        new JsonHas("value", 1),
+        new JsonHas("value", 2),
+        new JsonHas("value", 3)
     )
 )
 ```
+For `JsonHas` you can provide as verbose configurable matcher to constructor:
+```java
+// matches that JSON has a field "foo" with string value containing "bar", e.g.
+// {"foo": "123-bar-456"}
+new JsonHas("foo", new JsonValueIs(Matchers.stringContains("bar")));
+```
+as simplified version with expected values: `new JsonHas("foo", "bar")` - it's equal to
+`new JsonHas("foo", new JsonValueIs(Matchers.equal("bar")))`.
 
 ### Matching JSON values
 
