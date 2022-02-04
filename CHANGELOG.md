@@ -1,3 +1,8 @@
+# 1.5.0
+
+ - c772c82 - feat: add constructors overloads
+   by Kirill <g4s8.public@gmail.com>
+
 # 1.4.0
 
  - 3e4643f ci: fixed release condig and pom
