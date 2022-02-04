@@ -56,7 +56,8 @@ public final class MainTest extends TestCase.Wrap {
                     new JsonContainsCase(),
                     new JsonHasCase(),
                     new JsonValueIsCase(),
-                    new StringIsJsonCase()
+                    new StringIsJsonCase(),
+                    new ReadmeExamplesCase()
                 )
             )
         );

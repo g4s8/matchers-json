@@ -28,6 +28,10 @@ package wtf.g4s8.hamcrest.json;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import javax.json.JsonArray;
 import javax.json.JsonValue;
 import org.hamcrest.Description;
@@ -68,6 +72,24 @@ public final class JsonContains extends TypeSafeMatcher<JsonArray> {
     public JsonContains(final List<Matcher<? extends JsonValue>> matchers) {
         super();
         this.matchers = Collections.unmodifiableList(matchers);
+    }
+
+    public JsonContains(final Number... nums) {
+        this(
+            Stream.of(nums).map(JsonValueIs::new).collect(Collectors.toList())
+        );
+    }
+
+    public JsonContains(final String... ints) {
+        this(
+            Stream.of(ints).map(JsonValueIs::new).collect(Collectors.toList())
+        );
+    }
+
+    public JsonContains(final Boolean... ints) {
+        this(
+            Stream.of(ints).map(JsonValueIs::new).collect(Collectors.toList())
+        );
     }
 
     @Override

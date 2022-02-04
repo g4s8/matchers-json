@@ -49,47 +49,37 @@ public final class JsonContainsCase extends TestGroup.Wrap {
         super(
             new TestGroup.Of(
                 "json-contains",
-                new SimpleItemsTest(),
-                new NestedObjectTest(),
-                new ComplexHierarchyTest()
-            )
-        );
-    }
-
-    /**
-     * Simple test case against array items.
-     * @since 1.0
-     */
-    private static final class SimpleItemsTest extends TestCase.Wrap {
-        /**
-         * Default ctor.
-         */
-        SimpleItemsTest() {
-            this(1, "qwe");
-        }
-
-        /**
-         * Primary ctor.
-         */
-        private SimpleItemsTest(final int num, final String str) {
-            super(
-                new SimpleTest<JsonArray>(
+                new SimpleTest<>(
                     "simple items",
-                    () -> Json.createArrayBuilder()
-                        .add(str)
-                        .add(num)
+                    Json.createArrayBuilder()
+                        .add("qwe")
+                        .add(1)
                         .add(JsonValue.TRUE)
                         .add(JsonValue.NULL)
                         .build(),
                     new JsonContains(
-                        new JsonValueIs(str),
-                        new JsonValueIs(num),
+                        new JsonValueIs("qwe"),
+                        new JsonValueIs(1),
                         new JsonValueIs(true),
                         JsonValueIs.NULL
                     )
+                ),
+                new NestedObjectTest(),
+                new ComplexHierarchyTest(),
+                new SimpleTest<>("Number varargs",
+                    Json.createArrayBuilder().add(1).add(2).add(3).build(),
+                    new JsonContains(1, 2, 3)
+                ),
+                new SimpleTest<>("String varargs",
+                    Json.createArrayBuilder().add("qwe").add("asd").add("zxc").build(),
+                    new JsonContains("qwe", "asd", "zxc")
+                ),
+                new SimpleTest<>("Boolean varargs",
+                    Json.createArrayBuilder().add(true).add(false).add(false).build(),
+                    new JsonContains(true, false, false)
                 )
-            );
-        }
+            )
+        );
     }
 
     /**

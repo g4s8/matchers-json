@@ -48,17 +48,17 @@ public final class JsonValueIsCase extends TestGroup.Wrap {
                 "json-value-is",
                 new SimpleTest<JsonValue>(
                     "matches string",
-                    () -> Json.createValue(JsonValueIsCase.class.getSimpleName()),
+                    Json.createValue(JsonValueIsCase.class.getSimpleName()),
                     new JsonValueIs(JsonValueIsCase.class.getSimpleName())
                 ),
                 new SimpleTest<JsonValue>(
                     "matches number",
-                    () -> Json.createValue(1),
+                    Json.createValue(1),
                     new JsonValueIs(1)
                 ),
                 new SimpleTest<JsonValue>(
                     "matches custom matchers",
-                    () -> Json.createValue("Starting with 1 2 3"),
+                    Json.createValue("Starting with 1 2 3"),
                     new JsonValueIs(
                         JsonValue.ValueType.STRING,
                         Matchers.startsWith("Starting")
