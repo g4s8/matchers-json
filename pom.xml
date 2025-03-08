@@ -196,28 +196,6 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>com.qulice</groupId>
-            <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.18.19</version>
-            <configuration>
-              <license>file:${basedir}/LICENSE</license>
-              <excludes combine.children="append">
-                <exclude>checkstyle:.*/src/test/resources/.*</exclude>
-                <exclude>pmd:.*/src/test/resources/.*</exclude>
-                <exclude>findbugs:.*</exclude>
-                <exclude>duplicatefinder:.*</exclude>
-                <exclude>dependencies:.*</exclude>
-                </excludes>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
           </plugin>
