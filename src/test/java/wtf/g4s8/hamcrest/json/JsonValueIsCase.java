@@ -24,8 +24,8 @@
  */
 package wtf.g4s8.hamcrest.json;
 
-import javax.json.Json;
-import javax.json.JsonValue;
+import jakarta.json.Json;
+import jakarta.json.JsonValue;
 import org.hamcrest.Matchers;
 import wtf.g4s8.oot.SimpleTest;
 import wtf.g4s8.oot.TestGroup;
@@ -46,17 +46,17 @@ public final class JsonValueIsCase extends TestGroup.Wrap {
         super(
             new TestGroup.Of(
                 "json-value-is",
-                new SimpleTest<JsonValue>(
+                new SimpleTest<>(
                     "matches string",
                     Json.createValue(JsonValueIsCase.class.getSimpleName()),
                     new JsonValueIs(JsonValueIsCase.class.getSimpleName())
                 ),
-                new SimpleTest<JsonValue>(
+                new SimpleTest<>(
                     "matches number",
                     Json.createValue(1),
                     new JsonValueIs(1)
                 ),
-                new SimpleTest<JsonValue>(
+                new SimpleTest<>(
                     "matches custom matchers",
                     Json.createValue("Starting with 1 2 3"),
                     new JsonValueIs(
