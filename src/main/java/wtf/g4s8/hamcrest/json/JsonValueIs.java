@@ -24,8 +24,8 @@
  */
 package wtf.g4s8.hamcrest.json;
 
+import jakarta.json.JsonValue;
 import java.util.Locale;
-import javax.json.JsonValue;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
