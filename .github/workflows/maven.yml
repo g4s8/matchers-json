@@ -27,4 +27,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-mvn-
       - name: Maven verify
-        run: mvn clean verify -B
+        run: mvn clean verify -B -Pqulice
