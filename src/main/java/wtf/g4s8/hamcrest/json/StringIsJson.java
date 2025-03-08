@@ -60,8 +60,10 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
      * @param matcher Json matcher
      * @param parsing Json parsing
      */
-    private StringIsJson(final Matcher<? extends JsonValue> matcher,
-                         final Function<JsonReader, JsonValue> parsing) {
+    private StringIsJson(
+        final Matcher<? extends JsonValue> matcher,
+        final Function<JsonReader, JsonValue> parsing
+    ) {
         super();
         this.matcher = matcher;
         this.parsing = parsing;
@@ -74,8 +76,10 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
     }
 
     @Override
-    public void describeMismatchSafely(final String item,
-                                       final Description description) {
+    public void describeMismatchSafely(
+        final String item,
+        final Description description
+    ) {
         description.appendText("string: '")
             .appendValue(item)
             .appendText("' ");
