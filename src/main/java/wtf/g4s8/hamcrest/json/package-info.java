@@ -23,7 +23,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * Hamcrest matchers for {@link javax.json.Json} objects.
+ * Hamcrest matchers for {@link jakarta.json.Json} objects.
  *
  * @since 1.0
  */
