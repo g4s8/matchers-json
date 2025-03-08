@@ -1,7 +1,7 @@
 [![Build and test](https://github.com/g4s8/matchers-json/actions/workflows/maven.yml/badge.svg)](https://github.com/g4s8/matchers-json/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/wtf.g4s8/matchers-json.svg)](https://maven-badges.herokuapp.com/maven-central/wtf.g4s8/matchers-json)
 
-[Hamcrest matchers](http://hamcrest.org/JavaHamcrest/) for `javax.json` objects and arrays, and raw JSON strings.
+[Hamcrest matchers](http://hamcrest.org/JavaHamcrest/) for `jakarta.json` objects and arrays, and raw JSON strings.
 
 [![PDD status](http://www.0pdd.com/svg?name=g4s8/matchers-json)](http://www.0pdd.com/p?name=g4s8/matchers-json)
 [![License](https://img.shields.io/github/license/g4s8/matchers-json.svg?style=flat-square)](https://github.com/g4s8/matchers-json/blob/master/LICENSE)
@@ -21,7 +21,7 @@ Add dependency to your `pom.xml`:
 </dependency>
 ```
 you can find latest version on Bintray badge above.
-Also, this library depends on `javax.json:javax.json-api` library.
+Also, this library depends on `jakarta.json:jakarta.json-api` library.
 
 ## Example
 
