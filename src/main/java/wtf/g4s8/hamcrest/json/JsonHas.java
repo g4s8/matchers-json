@@ -24,8 +24,8 @@
  */
 package wtf.g4s8.hamcrest.json;
 
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
