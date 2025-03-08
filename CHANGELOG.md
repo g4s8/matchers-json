@@ -1,3 +1,7 @@
+# 1.5.1
+ - b0a4c5a - deps: migrate from javax.json to jakarta.json (#16)
+   by Kirill Che. <g4s8.public@gmail.com>
+
 # 1.5.0
 
  - c772c82 - feat: add constructors overloads
