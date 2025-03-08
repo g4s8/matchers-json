@@ -24,14 +24,14 @@
  */
 package wtf.g4s8.hamcrest.json;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+import jakarta.json.JsonValue;
+import jakarta.json.stream.JsonParsingException;
 import java.io.StringReader;
 import java.util.function.Function;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import javax.json.stream.JsonParsingException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -61,7 +61,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
      * @param parsing Json parsing
      */
     private StringIsJson(final Matcher<? extends JsonValue> matcher,
-        final Function<JsonReader, JsonValue> parsing) {
+                         final Function<JsonReader, JsonValue> parsing) {
         super();
         this.matcher = matcher;
         this.parsing = parsing;
@@ -75,7 +75,7 @@ public abstract class StringIsJson extends TypeSafeMatcher<String> {
 
     @Override
     public void describeMismatchSafely(final String item,
-        final Description description) {
+                                       final Description description) {
         description.appendText("string: '")
             .appendValue(item)
             .appendText("' ");
