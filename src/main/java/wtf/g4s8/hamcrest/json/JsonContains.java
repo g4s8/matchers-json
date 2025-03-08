@@ -29,9 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 import javax.json.JsonArray;
 import javax.json.JsonValue;
 import org.hamcrest.Description;
@@ -74,21 +72,36 @@ public final class JsonContains extends TypeSafeMatcher<JsonArray> {
         this.matchers = Collections.unmodifiableList(matchers);
     }
 
+    /**
+     * Match provided numbers.
+     *
+     * @param nums Numbers
+     */
     public JsonContains(final Number... nums) {
         this(
             Stream.of(nums).map(JsonValueIs::new).collect(Collectors.toList())
         );
     }
 
-    public JsonContains(final String... ints) {
+    /**
+     * Match provided strings.
+     *
+     * @param strs Strings
+     */
+    public JsonContains(final String... strs) {
         this(
-            Stream.of(ints).map(JsonValueIs::new).collect(Collectors.toList())
+            Stream.of(strs).map(JsonValueIs::new).collect(Collectors.toList())
         );
     }
 
-    public JsonContains(final Boolean... ints) {
+    /**
+     * Match provided booleans.
+     *
+     * @param bools Booleans
+     */
+    public JsonContains(final Boolean... bools) {
         this(
-            Stream.of(ints).map(JsonValueIs::new).collect(Collectors.toList())
+            Stream.of(bools).map(JsonValueIs::new).collect(Collectors.toList())
         );
     }
 
