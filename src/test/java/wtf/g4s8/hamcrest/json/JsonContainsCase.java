@@ -39,7 +39,9 @@ import wtf.g4s8.oot.TestGroup;
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocParameterOrderCheck (500 lines)
+ * @checkstyle MagicNumberCheck (500 lines)
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class JsonContainsCase extends TestGroup.Wrap {
 
     /**
@@ -66,15 +68,18 @@ public final class JsonContainsCase extends TestGroup.Wrap {
                 ),
                 new NestedObjectTest(),
                 new ComplexHierarchyTest(),
-                new SimpleTest<>("Number varargs",
+                new SimpleTest<>(
+                    "Number varargs",
                     Json.createArrayBuilder().add(1).add(2).add(3).build(),
                     new JsonContains(1, 2, 3)
                 ),
-                new SimpleTest<>("String varargs",
+                new SimpleTest<>(
+                    "String varargs",
                     Json.createArrayBuilder().add("qwe").add("asd").add("zxc").build(),
                     new JsonContains("qwe", "asd", "zxc")
                 ),
-                new SimpleTest<>("Boolean varargs",
+                new SimpleTest<>(
+                    "Boolean varargs",
                     Json.createArrayBuilder().add(true).add(false).add(false).build(),
                     new JsonContains(true, false, false)
                 )
@@ -127,8 +132,10 @@ public final class JsonContainsCase extends TestGroup.Wrap {
          * Primary ctor.
          * @checkstyle ParameterNumberCheck (5 lines)
          */
-        private ComplexHierarchyTest(final String kname, final String kvalues,
-            final String kvalue, final String vsecond, final String vfirst) {
+        private ComplexHierarchyTest(
+            final String kname, final String kvalues,
+            final String kvalue, final String vsecond, final String vfirst
+        ) {
             super(
                 new SimpleTest<JsonArray>(
                     "complex hierarchy",
@@ -145,15 +152,15 @@ public final class JsonContainsCase extends TestGroup.Wrap {
                                         )
                                 )
                         ).add(
-                        Json.createObjectBuilder()
-                            .add(kname, vsecond)
-                            .add(
-                                kvalues,
-                                Json.createArrayBuilder()
-                                    .add(Json.createObjectBuilder().add(kvalue, 1))
-                                    .add(Json.createObjectBuilder().add(kvalue, 2))
-                            )
-                    ).build(),
+                            Json.createObjectBuilder()
+                                .add(kname, vsecond)
+                                .add(
+                                    kvalues,
+                                    Json.createArrayBuilder()
+                                        .add(Json.createObjectBuilder().add(kvalue, 1))
+                                        .add(Json.createObjectBuilder().add(kvalue, 2))
+                                )
+                        ).build(),
                     new JsonContains(
                         Matchers.allOf(
                             Arrays.asList(
