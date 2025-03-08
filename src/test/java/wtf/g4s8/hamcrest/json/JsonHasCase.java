@@ -24,9 +24,9 @@
  */
 package wtf.g4s8.hamcrest.json;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonValue;
 import wtf.g4s8.oot.SimpleTest;
 import wtf.g4s8.oot.TestCase;
 import wtf.g4s8.oot.TestGroup;
@@ -174,4 +174,3 @@ public final class JsonHasCase extends TestGroup.Wrap {
         }
     }
 }
-
