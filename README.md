@@ -21,7 +21,7 @@ Add dependency to your `pom.xml`:
 </dependency>
 ```
 you can find latest version on Bintray badge above.
-Also, this library depends on `javax.json:javax.json-api` library.
+Also, this library depends on `jakarta.json:jakarta.json-api` library.
 
 ## Example
 
