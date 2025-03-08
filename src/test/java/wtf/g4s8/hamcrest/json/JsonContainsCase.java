@@ -24,10 +24,10 @@
  */
 package wtf.g4s8.hamcrest.json;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonValue;
 import java.util.Arrays;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonValue;
 import org.hamcrest.Matchers;
 import wtf.g4s8.oot.SimpleTest;
 import wtf.g4s8.oot.TestCase;
