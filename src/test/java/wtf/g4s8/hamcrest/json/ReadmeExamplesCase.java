@@ -24,7 +24,7 @@
  */
 package wtf.g4s8.hamcrest.json;
 
-import javax.json.Json;
+import jakarta.json.Json;
 import org.hamcrest.Matchers;
 import wtf.g4s8.oot.SimpleTest;
 import wtf.g4s8.oot.TestGroup;
