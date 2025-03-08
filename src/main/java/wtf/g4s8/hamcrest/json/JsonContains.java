@@ -25,13 +25,13 @@
 
 package wtf.g4s8.hamcrest.json;
 
+import jakarta.json.JsonArray;
+import jakarta.json.JsonValue;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.json.JsonArray;
-import javax.json.JsonValue;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
